@@ -1,0 +1,96 @@
+package Controller;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.example.demo.activitati.*;
+
+import basic.*;
+
+@Controller
+@RequestMapping("/track")
+public class TrackController {
+
+    private Curs curs;
+
+    public TrackController() {
+        initializeData();
+    }
+
+    private void initializeData() {
+        Trainer trainer = new Trainer("Doe", "John", "New York", 35, false);
+        ArrayList<Persoana> exploreri = new ArrayList<>();
+        exploreri.add(new Explorer("Smith", "Anna", "Los Angeles", 25, false));
+        exploreri.add(new Explorer("Brown", "Michael", "Chicago", 30, true));
+
+        LinkedHashMap<String, Activitate> activitati = new LinkedHashMap<>();
+        activitati.put("Material", new Material());
+        activitati.put("Rush", new Rush());
+        activitati.put("Tema", new Tema());
+
+        curs = new Curs("Java Development", "mediu", trainer, exploreri, 500);
+        curs.setActivitati(activitati);
+    }
+
+    @GetMapping("/curs")
+    public String getCurs(Model model) {
+        model.addAttribute("curs", curs);
+        return "curs";
+    }
+
+    @GetMapping("/adauga-participant")
+    public String adaugaParticipant() {
+        return "adauga-participant";
+    }
+
+    @PostMapping("/adauga-participant")
+    public String procesareAdaugaParticipant(
+            @RequestParam String nume,
+            @RequestParam String prenume,
+            @RequestParam String tip) {
+        if ("explorer".equalsIgnoreCase(tip)) {
+            curs.getExploreri().add(new Explorer(nume, prenume, "Unknown", 0, false));
+        } else if ("trainer".equalsIgnoreCase(tip)) {
+            curs.setTrainer(new Trainer(nume, prenume, "Unknown", 0, false));
+        }
+        return "redirect:/track/curs";
+    }
+
+    @GetMapping("/adauga-curs")
+    public String adaugaCurs() {
+        return "adauga-curs";
+    }
+
+    @PostMapping("/adauga-curs")
+    public String procesareAdaugaCurs(
+            @RequestParam String nume,
+            @RequestParam String dificultate,
+            @RequestParam int cost) {
+        curs = new Curs(nume, dificultate, null, new ArrayList<>(), cost);
+        return "redirect:/track/curs";
+    }
+
+    @GetMapping("/actualizeaza-curs")
+    public String actualizeazaCurs() {
+        return "actualizeaza-curs";
+    }
+
+    @PostMapping("/actualizeaza-curs")
+    public String procesareActualizeazaCurs(
+            @RequestParam String nume,
+            @RequestParam String descriere) {
+        curs.getActivitati().put(nume, new Material() {
+            @Override
+            public String getDescriere() {
+                return descriere;
+            }
+        });
+        return "redirect:/track/curs";
+    }
+}

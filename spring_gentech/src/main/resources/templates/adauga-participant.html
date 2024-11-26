@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Adaugă Participant</title>
+</head>
+<body>
+    <h1>Adaugă Participant</h1>
+    <form action="/track/adauga-participant" method="post">
+        <label for="nume">Nume:</label>
+        <input type="text" id="nume" name="nume"><br>
+        
+        <label for="prenume">Prenume:</label>
+        <input type="text" id="prenume" name="prenume"><br>
+        
+        <label for="tip">Tip:</label>
+        <select id="tip" name="tip">
+            <option value="explorer">Explorer</option>
+            <option value="trainer">Trainer</option>
+        </select><br>
+        
+        <button type="submit">Adaugă</button>
+    </form>
+</body>
+</html>

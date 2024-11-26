@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalii Curs</title>
+</head>
+<body>
+    <h1>Detalii pentru curs: <span th:text="${curs.nume}"></span></h1>
+    <p>Dificultate: <span th:text="${curs.dificultate}"></span></p>
+    <p>Cost: <span th:text="${curs.cost}"></span></p>
+    
+    <h2>Activități</h2>
+    <ul>
+        <li th:each="activitate : ${curs.activitati}" th:text="${activitate.descriere}"></li>
+    </ul>
+    
+    <h2>Participanți</h2>
+    <ul>
+        <li th:each="participant : ${curs.exploreri}" th:text="${participant.nume} + ' ' + ${participant.prenume}"></li>
+    </ul>
+</body>
+</html>

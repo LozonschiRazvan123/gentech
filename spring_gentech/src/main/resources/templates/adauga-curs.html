@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Adaugă Curs</title>
+</head>
+<body>
+    <h1>Adaugă Curs Nou</h1>
+    <form action="/track/adauga-curs" method="post">
+        <label for="nume">Nume:</label>
+        <input type="text" id="nume" name="nume"><br>
+        
+        <label for="dificultate">Dificultate:</label>
+        <input type="text" id="dificultate" name="dificultate"><br>
+        
+        <label for="cost">Cost:</label>
+        <input type="number" id="cost" name="cost"><br>
+        
+        <button type="submit">Adaugă</button>
+    </form>
+</body>
+</html>
